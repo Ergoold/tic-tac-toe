@@ -6,30 +6,35 @@ address|string
 0|`"X"`
 1|`"Y"`
 2|`"."`
-3|`"'s turn\n"`
-11|`" wins!\n"`
-18|`"> "`
+3|`"\n"`
+4|`"3 "`
+6|`"2 "`
+8|`"1 "`
+10|`"\nabc\n"`
+15|`"'s turn\n"`
+23|`" wins!\n"`
+30|`"> "`
 
 Next, the following addresses are used for arguments to WASI functions:
 
 address|parameter
 ---:|---
-20|`iovs`
-28|`nwritten`/`nread`
+32|`iovs`
+40|`nwritten`/`nread`
 
 The tic-tac-toe game field itself follows:
 
 address|cell
 ---:|---
-32|a1
-36|a2
-40|a3
-44|b1
-48|b2
-52|b3
-56|c1
-60|c2
-64|c3
+44|a1
+48|a2
+52|a3
+56|b1
+60|b2
+64|b3
+68|c1
+72|c2
+76|c3
 
 Which correspond like this to the board:
 
@@ -41,4 +46,4 @@ Which correspond like this to the board:
   abc
 ```
 
-Lastly, user input is stored beginning at address 68.
+Lastly, user input is stored beginning at address 80.
