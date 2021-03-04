@@ -10,10 +10,10 @@ address|string
 4|`"3 "`
 6|`"2 "`
 8|`"1 "`
-10|`"\nabc\n"`
-15|`"'s turn\n"`
-23|`" wins!\n"`
-30|`"> "`
+11|`"  abc\n"`
+16|`"'s turn\n"`
+24|`" wins!\n"`
+31|`">"`
 
 Next, the following addresses are used for arguments to WASI functions:
 
