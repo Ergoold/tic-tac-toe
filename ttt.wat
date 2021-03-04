@@ -119,4 +119,34 @@
 	br 0))
     i32.const 10
     i32.const 6
-    call $write))
+    call $write)
+  (func $parse_letter (result i32)
+    i32.const 80
+    i32.load8_s
+    i32.const 96
+    i32.sub)
+  (func $parse_number (result i32)
+    ;; now you're thinking with portals
+    i32.const 4
+    i32.const 81
+    i32.load8_s
+    i32.const 48
+    i32.sub
+    i32.sub)
+  (func (export "_start")
+    call $write_board
+    i32.const 1
+    i32.const 1
+    call $write
+    i32.const 16
+    i32.const 8
+    call $write
+    i32.const 31
+    i32.const 1
+    call $write
+    call $read
+    call $parse_number
+    call $parse_letter
+    i32.const 1
+    call $set
+    call $write_board))
