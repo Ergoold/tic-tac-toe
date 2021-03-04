@@ -3,9 +3,9 @@ The following strings are saved in memory for i/o purposes:
 
 address|string
 ---:|---
-0|`"X"`
-1|`"Y"`
-2|`"."`
+0|`"."`
+1|`"X"`
+2|`"Y"`
 3|`"\n"`
 4|`"3 "`
 6|`"2 "`
