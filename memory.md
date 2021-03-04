@@ -14,8 +14,7 @@ Next, the following addresses are used for arguments to WASI functions:
 
 address|parameter
 ---:|---
-20|`*iovs`
-24|`iovs_len`
+20|`iovs`
 28|`nwritten`/`nread`
 
 The tic-tac-toe game field itself follows:
