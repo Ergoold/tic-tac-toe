@@ -7,8 +7,8 @@ address|string
 1|`"Y"`
 2|`"."`
 3|`"'s turn\n"`
-11|`" won!\n"`
-17|`"> "`
+11|`" wins!\n"`
+18|`"> "`
 
 Next, the following addresses are used for arguments to WASI functions:
 
