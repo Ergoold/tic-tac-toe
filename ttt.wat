@@ -8,7 +8,7 @@
   ;; constant strings
   (data (i32.const 0) ".") ;; length 1
   (data (i32.const 1) "X") ;; length 1
-  (data (i32.const 2) "Y") ;; length 1
+  (data (i32.const 2) "O") ;; length 1
   (data (i32.const 3) "\n") ;; length 1
   (data (i32.const 4) "3 ") ;; length 2
   (data (i32.const 6) "2 ") ;; length 2
