@@ -133,20 +133,30 @@
     i32.const 48
     i32.sub
     i32.sub)
-  (func (export "_start")
-    call $write_board
-    i32.const 1
+  (func $write_turn (param i32)
+    local.get 0
     i32.const 1
     call $write
     i32.const 16
     i32.const 8
-    call $write
+    call $write)
+  (func $write_prompt
     i32.const 31
     i32.const 1
-    call $write
+    call $write)
+  (func $turn (param i32)
+    call $write_board
+    local.get 0
+    call $write_turn
+    call $write_prompt
     call $read
     call $parse_number
     call $parse_letter
+    local.get 0
+    call $set)
+  (func (export "_start")
     i32.const 1
-    call $set
+    call $turn
+    i32.const 2
+    call $turn
     call $write_board))
