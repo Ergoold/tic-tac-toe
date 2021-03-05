@@ -269,14 +269,38 @@
 	local.get $col
 	call $won
 	br 1)))
-  (func (export "_start")
-    (block
-      (loop
+  (func (export "_start") (local $round i32)
+    i32.const 0
+    local.set $round
+    (block (result i32)
+      (loop (result i32)
         i32.const 1
         call $turn
-	br_if 1
+	(if
+	  (then
+	    i32.const 1
+	    br 2))
+	local.get $round
+	i32.const 4
+	i32.eq
+	(if
+	  (then
+	    i32.const 0
+	    br 2))
         i32.const 2
         call $turn
-	br_if 1
+	(if
+	  (then
+	    i32.const 2
+	    br 2))
+	local.get $round
+	i32.const 1
+	i32.add
+	local.set $round
 	br 0))
-    call $write_board))
+    call $write_board
+    i32.const 1
+    call $write
+    i32.const 24
+    i32.const 7
+    call $write))
