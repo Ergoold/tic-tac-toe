@@ -72,6 +72,21 @@
     call $cell_addr
     local.get 2
     i32.store)
+  ;; row, col, val -> success
+  (func $tryset (param i32 i32 i32) (result i32)
+    local.get 0
+    local.get 1
+    call $get
+    i32.eqz
+    (if (result i32)
+      (then
+	local.get 0
+	local.get 1
+	local.get 2
+	call $set
+	i32.const 1)
+      (else
+	i32.const 0)))
   ;; write the game board to the screen
   (func $write_board (local $row i32) (local $col i32)
     i32.const 1
@@ -146,17 +161,24 @@
     call $write)
   (func $turn (param i32)
     call $write_board
-    local.get 0
-    call $write_turn
-    call $write_prompt
-    call $read
-    call $parse_number
-    call $parse_letter
-    local.get 0
-    call $set)
+    (block
+      (loop
+        local.get 0
+        call $write_turn
+        call $write_prompt
+        call $read
+        call $parse_number
+        call $parse_letter
+        local.get 0
+        call $tryset
+	br_if 1
+	br 0)))
   (func (export "_start")
-    i32.const 1
-    call $turn
-    i32.const 2
-    call $turn
-    call $write_board))
+    (block
+      (loop
+        i32.const 1
+        call $turn
+        i32.const 2
+        call $turn
+        call $write_board
+	br 0))))
