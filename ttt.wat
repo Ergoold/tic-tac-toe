@@ -270,7 +270,7 @@
 	local.get $col
 	call $won
 	br 1)))
-  (func (export "_start") (local $round i32)
+  (func (export "_start") (local $round i32) (local $winner i32)
     i32.const 0
     local.set $round
     (block (result i32)
@@ -300,8 +300,17 @@
 	local.set $round
 	br 0))
     call $write_board
-    i32.const 1
-    call $write
-    i32.const 24
-    i32.const 7
-    call $write))
+    local.tee $winner
+    i32.eqz
+    (if
+      (then
+	i32.const 31
+	i32.const 12
+	call $write)
+      (else
+	local.get $winner
+        i32.const 1
+        call $write
+        i32.const 24
+        i32.const 7
+        call $write))))
