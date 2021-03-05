@@ -72,7 +72,7 @@
     call $cell_addr
     local.get 2
     i32.store)
-  ;; row, col, val -> success
+  ;; row, col, val -> failure
   (func $tryset (param i32 i32 i32) (result i32)
     local.get 0
     local.get 1
@@ -84,9 +84,9 @@
 	local.get 1
 	local.get 2
 	call $set
-	i32.const 1)
+	i32.const 0)
       (else
-	i32.const 0)))
+	i32.const 1)))
   ;; write the game board to the screen
   (func $write_board (local $row i32) (local $col i32)
     i32.const 1
@@ -159,26 +159,124 @@
     i32.const 31
     i32.const 1
     call $write)
-  (func $turn (param i32)
+  (func $won_row (param i32) (result i32)
+    local.get 0
+    i32.const 1
+    call $get
+    local.get 0
+    i32.const 2
+    call $get
+    i32.eq
+    local.get 0
+    i32.const 2
+    call $get
+    local.get 0
+    i32.const 3
+    call $get
+    i32.eq
+    i32.and)
+  (func $won_col (param i32) (result i32)
+    i32.const 1
+    local.get 0
+    call $get
+    i32.const 2
+    local.get 0
+    call $get
+    i32.eq
+    i32.const 2
+    local.get 0
+    call $get
+    i32.const 3
+    local.get 0
+    call $get
+    i32.eq
+    i32.and)
+  (func $won_major_diag (result i32)
+    i32.const 1
+    i32.const 1
+    call $get
+    i32.const 2
+    i32.const 2
+    call $get
+    i32.eq
+    i32.const 2
+    i32.const 2
+    call $get
+    i32.const 3
+    i32.const 3
+    call $get
+    i32.eq
+    i32.and)
+  (func $won_minor_diag (result i32)
+    i32.const 1
+    i32.const 3
+    call $get
+    i32.const 2
+    i32.const 2
+    call $get
+    i32.eq
+    i32.const 2
+    i32.const 2
+    call $get
+    i32.const 3
+    i32.const 1
+    call $get
+    i32.eq
+    i32.and)
+  (func $won (param $row i32) (param $col i32) (result i32) (local $tmp i32)
+    local.get $row
+    call $won_row
+    local.tee $tmp
+    local.get $tmp
+    br_if 0
+    drop
+    local.get $col
+    call $won_col
+    local.tee $tmp
+    local.get $tmp
+    br_if 0
+    drop
+    ;; now you're thinking with portals
+    i32.const 0
+    i32.const 2
+    i32.const 2
+    call $get
+    i32.eqz
+    br_if 0
+    drop
+    call $won_major_diag
+    local.tee $tmp
+    local.get $tmp
+    br_if 0
+    drop
+    call $won_minor_diag)
+  (func $turn (param i32) (result i32) (local $row i32) (local $col i32)
     call $write_board
-    (block
-      (loop
+    (block (result i32)
+      (loop (result i32)
         local.get 0
         call $write_turn
         call $write_prompt
         call $read
         call $parse_number
+	local.tee $row
         call $parse_letter
+	local.tee $col
         local.get 0
         call $tryset
-	br_if 1
-	br 0)))
+	br_if 0
+	local.get $row
+	local.get $col
+	call $won
+	br 1)))
   (func (export "_start")
     (block
       (loop
         i32.const 1
         call $turn
+	br_if 1
         i32.const 2
         call $turn
-        call $write_board
-	br 0))))
+	br_if 1
+	br 0))
+    call $write_board))
