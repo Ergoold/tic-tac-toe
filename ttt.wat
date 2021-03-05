@@ -16,34 +16,35 @@
   (data (i32.const 10) "  abc\n") ;; length 6
   (data (i32.const 16) "'s turn\n") ;; length 8
   (data (i32.const 24) " wins!\n") ;; length 7
-  (data (i32.const 31) ">") ;; length 1
+  (data (i32.const 31) "It's a tie!\n") ;; length 12
+  (data (i32.const 43) ">") ;; length 1
   ;; wasi i/o function wrappers
   ;; *str, len -> void
   (func $write (param i32 i32)
-    i32.const 32
+    i32.const 44
     local.get 0
     i32.store
-    i32.const 36
+    i32.const 48
     local.get 1
     i32.store
     i32.const 1
-    i32.const 32
+    i32.const 44
     i32.const 1
-    i32.const 40
+    i32.const 52
     call $fd_write
     drop)
   ;; void -> void
   (func $read
-    i32.const 32
-    i32.const 80
+    i32.const 44
+    i32.const 92
     i32.store
-    i32.const 36
+    i32.const 48
     i32.const 256
     i32.store
     i32.const 0
-    i32.const 32
+    i32.const 44
     i32.const 1
-    i32.const 40
+    i32.const 52
     call $fd_read
     drop)
   ;; get the address of a cell
@@ -56,7 +57,7 @@
     i32.const 4
     i32.mul
     i32.add
-    i32.const 28
+    i32.const 40
     i32.add)
   ;; get/set the value of a cell (1-based)
   ;; row, col -> value
@@ -136,14 +137,14 @@
     i32.const 6
     call $write)
   (func $parse_letter (result i32)
-    i32.const 80
+    i32.const 92
     i32.load8_s
     i32.const 96
     i32.sub)
   (func $parse_number (result i32)
     ;; now you're thinking with portals
     i32.const 4
-    i32.const 81
+    i32.const 93
     i32.load8_s
     i32.const 48
     i32.sub
@@ -156,7 +157,7 @@
     i32.const 8
     call $write)
   (func $write_prompt
-    i32.const 31
+    i32.const 43
     i32.const 1
     call $write)
   (func $won_row (param i32) (result i32)
